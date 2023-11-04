@@ -2,6 +2,18 @@
 
 defined('BASEPATH') or exit('Akses langsung tidak diizinkan!');
 
+// This function purpose to replace separator into DIRECTORY_SEPARATOR
+// And replace 2 separator into single separator
+if (!function_exists("fix_separator")) {
+    function fix_separator($paths)
+    {
+        $path = join(DIRECTORY_SEPARATOR, $paths);
+        $path = str_replace("/", DIRECTORY_SEPARATOR, $path);
+        $path = str_replace(str_repeat(DIRECTORY_SEPARATOR, 2), DIRECTORY_SEPARATOR, $path);
+        return $path;
+    }
+}
+
 //remove end backslash mark
 if (!function_exists("remove_end_bs")) {
     function remove_end_bs($path)
@@ -16,6 +28,7 @@ if (!function_exists("remove_end_bs")) {
     }
 }
 
+//get config values
 if (!function_exists('get_config')) {
     function get_config($item)
     {
@@ -24,6 +37,7 @@ if (!function_exists('get_config')) {
     }
 }
 
+//Load php as view and render it
 if (!function_exists("load_view")) {
     function load_view($module, $params = null, $return = false)
     {
@@ -45,6 +59,7 @@ if (!function_exists("load_view")) {
     }
 }
 
+//Load helper from helpers dir
 if (!function_exists("load_helper")) {
     function load_helper($helper)
     {
@@ -57,6 +72,7 @@ if (!function_exists("load_helper")) {
     }
 }
 
+//Load library from libraries dir
 if (!function_exists("load_library")) {
     function load_library($library)
     {
@@ -69,6 +85,7 @@ if (!function_exists("load_library")) {
     }
 }
 
+//get APP_NAME info
 if (!function_exists("app_name")) {
     function app_name()
     {
@@ -77,6 +94,7 @@ if (!function_exists("app_name")) {
     }
 }
 
+//get Asset from Assets DIR
 if (!function_exists("asset")) {
     function asset($path)
     {
@@ -101,6 +119,7 @@ if (!function_exists("asset")) {
     }
 }
 
+// Generate URL
 if (!function_exists("url")) {
     function url($path = null)
     {
@@ -125,6 +144,7 @@ if (!function_exists("url")) {
     }
 }
 
+//Vardump with style
 if (!function_exists("vardump")) {
     function vardump($identifier)
     {
@@ -132,4 +152,33 @@ if (!function_exists("vardump")) {
         print_r($identifier);
         exit();
     }
+}
+
+//Add route 
+function add_route($path, $module, $hooks = TRUE, $method = "GET")
+{
+    global $ROUTES;
+    if (substr($path, 0, 1) != "/") {
+        $ROUTES[strtolower('/' . $path)] = ["path" => $path, "module" => $module, "hooks" => $hooks, "method" => $method];
+    } else {
+        $ROUTES[strtolower($path)] = ["path" => $path, "module" => $module, "hooks" => $hooks, "method" => $method];
+    }
+}
+
+//Redirect
+function redirect($path)
+{
+    header('Location: ' . url($path));
+    exit();
+}
+
+//Get result if a $href is in current url
+function is_request_uri($href)
+{
+    $request_uri = $_SERVER['PATH_INFO'] ? $_SERVER['PATH_INFO'] : "/";
+    $request_uri = substr($request_uri, 0, strlen($href));
+    if ($href == $request_uri) {
+        return true;
+    }
+    return false;
 }

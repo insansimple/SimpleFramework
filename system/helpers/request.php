@@ -68,6 +68,7 @@ if (!function_exists('if_content')) {
         return true;
     }
 }
+
 if (!function_exists('get_content')) {
     function get_content()
     {

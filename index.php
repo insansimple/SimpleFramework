@@ -1,12 +1,43 @@
 <?php
-$system_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'system';
-define('BASEPATH', $system_path);
+define('BASEPATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 
-require './config/config.php';
-require $config['SYSTEM_DIR'] . DIRECTORY_SEPARATOR . 'cors.php';
+require './system/config.php';
+if (isset($config['RUN_MODE'])) {
+    $run_mode = $config['RUN_MODE'];
+    if (in_array($run_mode, ['development', 'production', 'maintenance'])) {
+        switch ($run_mode) {
+            case 'development':
+                ini_set('display_errors', 1);
+                ini_set('display_startup_errors', 1);
+                error_reporting(E_ALL);
+                mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+                break;
+            case 'maintenance':
+                include_once($config['MAINTENANCE_DIR'] . '/page.php');
+                exit;
+            case 'production':
+                break;
+        }
+    }
+}
+
+require $config['CORES_DIR'] . DIRECTORY_SEPARATOR . 'cors.php';
 // require './vendor/autoload.php';
-require $config['SYSTEM_DIR'] . DIRECTORY_SEPARATOR . 'autoload.php';
-require $config['SYSTEM_DIR'] . DIRECTORY_SEPARATOR . 'system_funcs.php';
-require $config['SYSTEM_DIR'] . DIRECTORY_SEPARATOR . 'routes_engine.php';
-require $config['ROUTE_DIR'] . DIRECTORY_SEPARATOR . 'web.php';
-require $config['SYSTEM_DIR'] . DIRECTORY_SEPARATOR . 'activate_routes.php';
+require $config['CORES_DIR'] . DIRECTORY_SEPARATOR . 'system_functions.php';
+
+//Autoload helpers
+if (count($config['HELPERS'])) {
+    foreach ($config['HELPERS'] as $helper) {
+        require_once fix_separator([$config['HELPER_DIR'], $helper]);
+    }
+}
+
+//Autoload libraries
+if (count($config['LIBRARIES'])) {
+    foreach ($config['LIBRARIES'] as $library) {
+        require_once fix_separator([$config['LIBRARIES_DIR'], $helper]);
+    }
+}
+
+require $config['ROUTES_DIR'] . DIRECTORY_SEPARATOR . 'web.php';
+require $config['CORES_DIR'] . DIRECTORY_SEPARATOR . 'activate_routes.php';

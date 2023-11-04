@@ -12,7 +12,7 @@ if ($path_info != "/") {
 // $path_info = isset($_SERVER['PATH_INFO']) ? remove_end_bs($_SERVER['PATH_INFO']) : '/';
 
 if (!isset($ROUTES[$path_info])) {
-    include fix_separator(['error', '404.php']);
+    include fix_separator([$config['ERRORS_DIR'], '404.php']);
 } else {
     // jika metod request lebih dari satu
     if (is_array($ROUTES[$path_info]['method'])) {
@@ -28,13 +28,18 @@ if (!isset($ROUTES[$path_info])) {
         if ($_SERVER['REQUEST_METHOD'] != "OPTIONS") {
             if ($_SERVER['REQUEST_METHOD'] != $method) {
                 http_response_code(405);
-                // echo "method salah!";
                 exit();
             }
         }
     }
 
     $module_or_callable = $ROUTES[$path_info]['module'];
+
+    $hook_enable = $config['ENABLE_HOOKS'] ?? False;
+
+    if ($hook_enable && $ROUTES[$path_info]['hooks']) {
+        include_once fix_separator([$config['HOOKS_DIR'], 'pre_hooks.php']);
+    }
 
     if (is_callable($module_or_callable)) {
         call_user_func($module_or_callable);
@@ -44,5 +49,9 @@ if (!isset($ROUTES[$path_info])) {
         $content = ob_get_contents();
         ob_end_clean();
         echo $content;
+    }
+
+    if ($hook_enable && $ROUTES[$path_info]['hooks']) {
+        include_once fix_separator([$config['HOOKS_DIR'], 'post_hooks.php']);
     }
 }

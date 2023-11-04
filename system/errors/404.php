@@ -1,40 +1,38 @@
-<?php defined('BASEPATH') or exit('Akses langsung tidak diizinkan!'); ?>
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selamat Datang di miniFramework</title>
+    <title>404 : Not Found</title>
     <style>
         body {
             margin: 0;
-            display: flex;
             height: 100vh;
-            align-items: center;
-            justify-content: center;
+            display: flex;
             font-family: sans-serif;
         }
 
         div {
-            padding: 15px;
             width: 500px;
             height: fit-content;
+            margin: auto;
+            overflow: hidden;
+            padding: 15px;
             text-align: center;
-            border: 1px solid #ccc;
-            box-shadow: 0 0 15px -5px #ccc;
-        }
-
-        h1, p {
-            color: #666;
+            color: #5d5858;
         }
     </style>
 </head>
+
 <body>
     <div>
-        <h1><?=$header?></h1>
-        <p><?=$text?></p>
+        <h1>404</h1>
+        <h3>Halaman yang Anda Cari Tidak ditemukan!</h3>
+        <a href="javascript:history.back()">Kembali</a> &nbsp;
+        <a href="<?= url('/') ?>">Halaman Utama</a>
     </div>
 </body>
+
 </html>
