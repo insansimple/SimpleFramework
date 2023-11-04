@@ -22,7 +22,9 @@ if (isset($config['RUN_MODE'])) {
 }
 
 require $config['CORES_DIR'] . DIRECTORY_SEPARATOR . 'cors.php';
-// require './vendor/autoload.php';
+
+// require $config['VENDORS_DIR'] . DIRECTORY_SEPARATOR . 'autoload.php';
+
 require $config['CORES_DIR'] . DIRECTORY_SEPARATOR . 'system_functions.php';
 
 //Autoload helpers

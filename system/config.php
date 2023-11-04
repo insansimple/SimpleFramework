@@ -30,8 +30,9 @@ $config['HELPERS_DIR']      = './system/helpers';
 $config['ROUTES_DIR']       = './system/routes';
 $config['CORES_DIR']        = './system/cores';
 $config['LIBRARIES_DIR']    = './system/libraries';
-$config['ERRORS_DIR']        = './system/errors';
+$config['ERRORS_DIR']       = './system/errors';
 $config['MAINTENANCE_DIR']  = './system/maintenance';
+$config['VENDORS_DIR']      = './system/vendors';
 
 //Session name
 $config['SESSION_NAME']     = 'simple_session';
