@@ -16,27 +16,47 @@
             align-items: center;
             justify-content: center;
             font-family: sans-serif;
+            color: #3d3c3a;
         }
 
-        div {
-            padding: 15px;
+        div.wrapper {
+            padding: 25px;
             width: 500px;
             height: fit-content;
             text-align: center;
-            /* border: 1px solid #ccc;
-            box-shadow: 0 0 15px -5px #ccc; */
+            border: 5px solid #d77920;
+            border-radius: 15px;
+        }
+
+        div div {
+            margin-bottom: 15px;
+        }
+
+        img {
+            height: 170px;
+            float: left;
+            margin-right: 15px;
+        }
+
+        h1 {
+            color: #d77920;
+            ;
         }
 
         h1,
         p {
-            color: #666;
+            margin: 0;
+            text-align: left;
         }
     </style>
 </head>
 
 <body>
-    <div>
-        <h1><?= $header ?></h1>
+    <div class="wrapper">
+        <div>
+            <img src="<?= asset('img/logo.png') ?>" alt="logo">
+            <h1><?= $header ?></h1>
+        </div>
         <p><?= $text ?></p>
     </div>
 </body>

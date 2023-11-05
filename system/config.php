@@ -3,13 +3,13 @@
 defined('BASEPATH') or exit('Akses langsung tidak diizinkan!');
 $config                     = [];
 //'development','production','maintenance'
-$config['RUN_MODE']         = 'development';
+$config['RUN_MODE']         = 'production';
 
 //Enable Hooks
-$config['ENABLE_HOOKS']     = True;
+$config['ENABLE_HOOKS']     = False;
 
 //Url name
-$config['URL']              = 'http://localhost:8000/';
+$config['URL']              = 'http://localhost:8080/';
 
 //Appname & Version
 $config['APP_NAME']         = 'Simple Framework';
@@ -22,9 +22,9 @@ $config['DB_PASSWORD']      = '';
 $config['DB_NAME']          = '';
 
 //Base Directories Configuration
-$config['ASSETS_DIR']       = './application/assets';
-$config['MODULES_DIR']      = './application/modules';
-$config['STORAGES_DIR']     = './application/uploads';
+$config['ASSETS_DIR']       = './assets';
+$config['APP_DIR']          = './app';
+$config['STORAGES_DIR']     = './uploads';
 $config['HOOKS_DIR']        = './system/hooks';
 $config['HELPERS_DIR']      = './system/helpers';
 $config['ROUTES_DIR']       = './system/routes';

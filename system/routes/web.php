@@ -4,5 +4,5 @@ defined('BASEPATH') or exit('Akses langsung tidak diizinkan!');
 
 $ROUTES = [];
 
-// untuk API
+//Add your router here
 add_route('/', 'default.php', 'get');

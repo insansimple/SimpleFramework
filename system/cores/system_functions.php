@@ -9,7 +9,9 @@ if (!function_exists("fix_separator")) {
     {
         $path = join(DIRECTORY_SEPARATOR, $paths);
         $path = str_replace("/", DIRECTORY_SEPARATOR, $path);
-        $path = str_replace(str_repeat(DIRECTORY_SEPARATOR, 2), DIRECTORY_SEPARATOR, $path);
+        while (strpos($path, str_repeat(DIRECTORY_SEPARATOR, 2))) {
+            $path = str_replace(str_repeat(DIRECTORY_SEPARATOR, 2), DIRECTORY_SEPARATOR, $path);
+        }
         return $path;
     }
 }
@@ -47,7 +49,7 @@ if (!function_exists("load_view")) {
                 ${$key} = $value;
             }
         }
-        include fix_separator([get_config('MODULES_DIR'), $module]);
+        include fix_separator([get_config('APP_DIR'), $module]);
         $res = ob_get_contents();
         ob_end_clean();
 
@@ -96,26 +98,16 @@ if (!function_exists("app_name")) {
 
 //get Asset from Assets DIR
 if (!function_exists("asset")) {
-    function asset($path)
+    function asset($path = "")
     {
         global $config;
-        if (substr($config['URL'], -1, 1) !== "/") {
-            $part1 = $config['URL'] . "/";
-        } else {
-            $part1 = $config['URL'];
+        $asset_dir = str_replace('./', DIRECTORY_SEPARATOR, $config['ASSETS_DIR']);
+        $asset_path = fix_separator([$asset_dir, $path]);
+        if (substr($asset_path, 0, 1) == '/') {
+            $asset_path = substr($asset_path, 1);
         }
-
-        if (isset($path)) {
-            if (substr($path, 0, 1) === "/") {
-                $part2 = substr($path, 1);
-            } else {
-                $part2 = $path;
-            }
-        } else {
-            $part2 = "";
-        }
-
-        return $part1 . $config['ASSETS_DIR'] . '/' . $part2;
+        $asset_path = $config['URL'] . $asset_path;
+        return $asset_path;
     }
 }
 

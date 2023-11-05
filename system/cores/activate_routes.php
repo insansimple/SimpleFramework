@@ -45,7 +45,7 @@ if (!isset($ROUTES[$path_info])) {
         call_user_func($module_or_callable);
     } else {
         ob_start();
-        include fix_separator([$config['MODULES_DIR'], $module_or_callable]);
+        include fix_separator([$config['APP_DIR'], $module_or_callable]);
         $content = ob_get_contents();
         ob_end_clean();
         echo $content;

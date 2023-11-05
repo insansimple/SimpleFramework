@@ -16,6 +16,8 @@ if (isset($config['RUN_MODE'])) {
                 include_once($config['MAINTENANCE_DIR'] . '/page.php');
                 exit;
             case 'production':
+                error_reporting(E_ALL);
+                ini_set('display_errors', 0);
                 break;
         }
     }
