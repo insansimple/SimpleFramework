@@ -32,14 +32,22 @@ require $config['CORES_DIR'] . DIRECTORY_SEPARATOR . 'system_functions.php';
 //Autoload helpers
 if (count($config['HELPERS'])) {
     foreach ($config['HELPERS'] as $helper) {
-        require_once fix_separator([$config['HELPERS_DIR'], $helper]);
+        $path = fix_separator([$config['HELPERS_DIR'], $helper]);
+        if (!file_exists($path)) {
+            die("Helper : $path not found!");
+        }
+        require_once $path;
     }
 }
 
 //Autoload libraries
 if (count($config['LIBRARIES'])) {
     foreach ($config['LIBRARIES'] as $library) {
-        require_once fix_separator([$config['LIBRARIES_DIR'], $helper]);
+        $path = fix_separator([$config['LIBRARIES_DIR'], $library]);
+        if (!file_exists($path)) {
+            die("Library : $path not found!");
+        }
+        require_once $path;
     }
 }
 

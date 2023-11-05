@@ -6,7 +6,7 @@ $config                     = [];
 $config['RUN_MODE']         = 'development';
 
 //Enable Hooks
-$config['ENABLE_HOOKS']     = False;
+$config['ENABLE_HOOKS']     = false;
 
 //Url name
 $config['URL']              = 'http://localhost:8080/';
@@ -24,6 +24,8 @@ $config['DB_NAME']          = '';
 //Base Directories Configuration
 $config['ASSETS_DIR']       = './assets';
 $config['APP_DIR']          = './app';
+$config['MODULES_DIR']      = './app/modules';
+$config['MODELS_DIR']       = './app/models';
 $config['STORAGES_DIR']     = './uploads';
 $config['HOOKS_DIR']        = './system/hooks';
 $config['HELPERS_DIR']      = './system/helpers';

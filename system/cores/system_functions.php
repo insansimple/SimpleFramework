@@ -35,7 +35,11 @@ if (!function_exists('get_config')) {
     function get_config($item)
     {
         global $config;
-        return $config[$item];
+        if (isset($config[$item])) {
+            return $config[$item];
+        } else {
+            die("config[$item] not found!");
+        }
     }
 }
 
@@ -43,13 +47,18 @@ if (!function_exists('get_config')) {
 if (!function_exists("load_view")) {
     function load_view($module, $params = null, $return = false)
     {
+        $path = fix_separator([get_config('MODULES_DIR'), $module]);
+        if (!file_exists($path)) {
+            die("View : $path not exist!");
+        }
+
         ob_start();
         if ($params) {
             foreach ($params as $key => $value) {
                 ${$key} = $value;
             }
         }
-        include fix_separator([get_config('APP_DIR'), $module]);
+        include $path;
         $res = ob_get_contents();
         ob_end_clean();
 
@@ -61,16 +70,28 @@ if (!function_exists("load_view")) {
     }
 }
 
+//Load php as models
+if (!function_exists("load_model")) {
+    function load_model($model_name, $as)
+    {
+        $path = fix_separator([get_config('MODULES_DIR'), $model_name]);
+        if (!file_exists($path)) {
+            die("Model : $path not found!");
+        }
+
+        require_once $path;
+    }
+}
+
 //Load helper from helpers dir
 if (!function_exists("load_helper")) {
     function load_helper($helper)
     {
-        ob_start();
-        include fix_separator([get_config('HELPER_DIR'), $helper]);
-        $res = ob_get_contents();
-        ob_end_clean();
-
-        echo $res;
+        $path = fix_separator([get_config('HELPER_DIR'), $helper]);
+        if (!file_exists($path)) {
+            die("Helper : $path not found!");
+        }
+        require_once $path;
     }
 }
 
@@ -78,12 +99,11 @@ if (!function_exists("load_helper")) {
 if (!function_exists("load_library")) {
     function load_library($library)
     {
-        ob_start();
-        include fix_separator([get_config('LIBRARIES_DIR'), $library]);
-        $res = ob_get_contents();
-        ob_end_clean();
-
-        echo $res;
+        $path = fix_separator([get_config('LIBRARIES_DIR'), $library]);
+        if (!file_exists($path)) {
+            die("Library : $path not found!");
+        }
+        require_once $path;
     }
 }
 
@@ -92,6 +112,10 @@ if (!function_exists("app_name")) {
     function app_name()
     {
         global $config;
+        if (!isset($config["APP_NAME"])) {
+            die('$config["APP_NAME"] not exist');
+        }
+
         return $config["APP_NAME"];
     }
 }

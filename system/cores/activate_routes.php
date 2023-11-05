@@ -44,8 +44,12 @@ if (!isset($ROUTES[$path_info])) {
     if (is_callable($module_or_callable)) {
         call_user_func($module_or_callable);
     } else {
+        $path = fix_separator([$config['MODULES_DIR'], $module_or_callable]);
+        if (!file_exists($path)) {
+            die("Module : $path not found!");
+        }
         ob_start();
-        include fix_separator([$config['APP_DIR'], $module_or_callable]);
+        include fix_separator([$config['MODULES_DIR'], $module_or_callable]);
         $content = ob_get_contents();
         ob_end_clean();
         echo $content;
