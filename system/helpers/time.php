@@ -63,3 +63,25 @@ if (!function_exists("time_ind")) {
         }
     }
 }
+
+if (!function_exists('get_time')) {
+    function get_time($str_date = "", $time_zone = 'Asia/Jakarta')
+    {
+        date_default_timezone_set($time_zone);
+        if ($str_date != "") {
+            $time = strtotime($str_date);
+        } else {
+            $time = time();
+        }
+        return $time;
+    }
+}
+
+if (!function_exists('format_time')) {
+    function format_time($time, $format = 'Y-m-d h:i:s', $time_zone = 'Asia/Jakarta')
+    {
+        date_default_timezone_set($time_zone);
+        $str_date = date($format, $time);
+        return $str_date;
+    }
+}

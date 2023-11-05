@@ -3,7 +3,7 @@
 defined('BASEPATH') or exit('Akses langsung tidak diizinkan!');
 $config                     = [];
 //'development','production','maintenance'
-$config['RUN_MODE']         = 'production';
+$config['RUN_MODE']         = 'development';
 
 //Enable Hooks
 $config['ENABLE_HOOKS']     = False;

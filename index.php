@@ -32,7 +32,7 @@ require $config['CORES_DIR'] . DIRECTORY_SEPARATOR . 'system_functions.php';
 //Autoload helpers
 if (count($config['HELPERS'])) {
     foreach ($config['HELPERS'] as $helper) {
-        require_once fix_separator([$config['HELPER_DIR'], $helper]);
+        require_once fix_separator([$config['HELPERS_DIR'], $helper]);
     }
 }
 

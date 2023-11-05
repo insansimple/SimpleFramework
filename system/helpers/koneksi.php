@@ -32,6 +32,18 @@ if (!function_exists('new_mysqli')) {
     }
 }
 
+if (!function_exists('new_pdo')) {
+    global $config;
+
+    try {
+        $pdo = new PDO("mysql:host=$config[DB_SERVER];dbname=$config[DB_NAME]", $config['DB_USER'], $config['DB_PASSWORD']);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        return $pdo;
+    } catch (PDOException $e) {
+        die("Connection failed: " . $e->getMessage());
+    }
+}
+
 if (!function_exists('real_escape')) {
     function real_escape($str, $conn)
     {
